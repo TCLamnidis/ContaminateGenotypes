@@ -75,5 +75,5 @@ sh.cp(args.Input+".ind", OutIndFile)
 with open(OutIndFile, "a") as f:
     for rate in rates:
         for rep in range(args.nrReps):
-            print (args.Sample+"_{}_{}".format(rate,rep+1), file=f)
+            print (args.Sample+"_{}_{}".format(rate,rep+1), Sex[args.Sample], Pop[args.Sample]+"_{}".format(rate), file=f)
 

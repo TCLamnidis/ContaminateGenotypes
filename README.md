@@ -31,4 +31,4 @@ Available options:
 ```
 The provided script will contaminate the genotypes of a given sample individual in an Eigenstrat dataaset at a specified rate, to match the genotypes of a specified contaminant individual. 
 Missing data in the sample individual will be kept as missing. A number of replicates can be specified for each contamination rate. contaminated individuals will be saved as a separate 
-individual within the resulting Eigenstrat database, following the naming scheme ``Sample_ContaminationRate_ReplicateNumber``
+individual within the resulting Eigenstrat database, following the naming scheme ``Sample_ContaminationRate_ReplicateNumber``. The population assigned to each replicate follows a similar naming scheme, but without a replicate number.

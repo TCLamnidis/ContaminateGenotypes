@@ -41,7 +41,7 @@ parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <O
 parser._optionals.title = "Available options"
 parser.add_argument("-i", "--Input", type=str, metavar="<INPUT FILES PREFIX>", required=True, help="The desired input file prefix. Input files are assumed to be '<INPUT PREFIX>.geno', '<INPUT PREFIX>.snp' and '<INPUT PREFIX>.ind'.")
 parser.add_argument("-o", "--Output", type=str, metavar="<OUTPUT FILES PREFIX>", required=False, help="The desired output file prefix. Three output files are created, '<OUTPUT FILES PREFIX>.geno', '<OUTPUT FILES PREFIX>.snp' and '<OUTPUT FILES PREFIX>.ind'.")
-parser.add_argument("-s", "--Samples", type=str, metavar="<SAMPLE1,SAMPLE2,SAMPLE3,...>", required=True, help="The sample individual, whose genotypes will be contaminated.")
+parser.add_argument("-s", "--Samples", type=str, metavar="<SAMPLE1,SAMPLE2,SAMPLE3,...>", required=True, help="The sample individual(s), whose genotypes will be contaminated.")
 parser.add_argument("-c", "--Contaminant", type=str, metavar="<CONTAMINANT>", required=True, help="The contaminant individual, which will be used to contaminate the genotypes of each <SAMPLE> at the specified rate(s).")
 parser.add_argument("-r", "--rates", type=str, metavar="<RATE1,RATE2,RATE3,...>", required=True, help="A comma separated list of contamination rates.")
 parser.add_argument("-n", "--nrReps", type=int, metavar="<nrReps>", required=False, default=5, help="An integer value specifying the number of replicate contaminated genotypes to be created per contamination rate [5].")

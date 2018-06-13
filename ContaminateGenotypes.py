@@ -20,7 +20,13 @@ def Contaminate(Genos, Sample, Contaminant, rates, nrReps, Index):
         for rate in rates:
             for Rep in range (nrReps):
                 if random.uniform(0,1) <= rate:
-                    Contaminated+=Genos[Index[Contaminant]]
+                    if Genos[Index[Contaminant]]=="1":
+                        if random.uniform(0,1) <= 0.5:
+                            Contaminated+="2"
+                        else:
+                            Contaminated+="0"
+                    else:
+                        Contaminated+=Genos[Index[Contaminant]]
                 else:
                     Contaminated+=Genos[Index[Sample]]
     else:

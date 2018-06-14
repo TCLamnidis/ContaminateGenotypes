@@ -1,8 +1,8 @@
 # ContaminateGenotypes
 A simple python script to contaminate Eigenstrat genotypes. 
 
-A tool to check two different EingenStrat databses for shared individuals, and
-extract or remove individuals from an EigenStrat database.
+A tool artificially contaminate the genotypes of multiple sample individuals 
+with genotypes from a contaminant individual, at different rates of contamination.
 
 ```
 Available options:
@@ -30,5 +30,11 @@ Available options:
                         rate [5].
 
 ```
-The provided script will contaminate the genotypes of a given sample individual in an Eigenstrat dataaset at a specified rate, to match the genotypes of a specified contaminant individual. 
-Missing data in the sample individual will be kept as missing. A number of replicates can be specified for each contamination rate. contaminated individuals will be saved as a separate individual within the resulting Eigenstrat database, following the naming scheme ``Sample_ContaminationRate_ReplicateNumber``. The population assigned to each replicate follows a similar naming scheme, but without a replicate number.
+The provided script will contaminate the genotypes of a given sample individual 
+in an Eigenstrat dataset at a specified rate, to match the genotypes of a 
+specified contaminant individual. Missing data in the sample individual will be 
+kept as missing. Heterozygotes in the contaminant will be pseudohaploidised. A 
+number of replicates can be specified for each contamination rate. Contaminated 
+individuals will be saved as a separate individual within the resulting 
+Eigenstrat database, following the naming scheme ``Sample_ContaminationRate_ReplicateNumber``. 
+The population assigned to each replicate follows a similar naming scheme, but without a replicate number.

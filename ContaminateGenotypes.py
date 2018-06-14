@@ -37,7 +37,7 @@ def Contaminate(Genos, SampleList, Contaminant, rates, nrReps, Index):
     return (Genos+Contaminated)
 
 ##MAIN##
-parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <OUTPUT FILE PREFIX>) (-s <SAMPLE>) (-c <CONTAMINANT>) (-r <RATE1,RATE2,RATE3,...>) (-n <nrReps>)" , description="A tool to check two different EingenStrat databses for shared individuals, and extract or remove individuals from an EigenStrat database.")
+parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <OUTPUT FILE PREFIX>) (-s <SAMPLE>) (-c <CONTAMINANT>) (-r <RATE1,RATE2,RATE3,...>) (-n <nrReps>)" , description="A tool artificially contaminate the genotypes of multiple sample individuals with genotypes from a contaminant individual, at different rates of contamination.")
 parser._optionals.title = "Available options"
 parser.add_argument("-i", "--Input", type=str, metavar="<INPUT FILES PREFIX>", required=True, help="The desired input file prefix. Input files are assumed to be '<INPUT PREFIX>.geno', '<INPUT PREFIX>.snp' and '<INPUT PREFIX>.ind'.")
 parser.add_argument("-o", "--Output", type=str, metavar="<OUTPUT FILES PREFIX>", required=False, help="The desired output file prefix. Three output files are created, '<OUTPUT FILES PREFIX>.geno', '<OUTPUT FILES PREFIX>.snp' and '<OUTPUT FILES PREFIX>.ind'.")

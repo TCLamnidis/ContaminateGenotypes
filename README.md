@@ -27,7 +27,7 @@ Available options:
   -n <nrReps>, --nrReps <nrReps>
                         An integer value specifying the number of replicate
                         contaminated genotypes to be created per contamination
-                        rate [5].
+                        rate [1].
 
 ```
 The provided script will contaminate the genotypes of a given sample individual 

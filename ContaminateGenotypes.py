@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/projects1/tools/anaconda3/4.0.0/bin/python3
 
 import sys, argparse, sh, random
 
@@ -44,7 +44,7 @@ parser.add_argument("-o", "--Output", type=str, metavar="<OUTPUT FILES PREFIX>",
 parser.add_argument("-s", "--Samples", type=str, metavar="<SAMPLE1,SAMPLE2,SAMPLE3,...>", required=True, help="The sample individual(s), whose genotypes will be contaminated.")
 parser.add_argument("-c", "--Contaminant", type=str, metavar="<CONTAMINANT>", required=True, help="The contaminant individual, which will be used to contaminate the genotypes of each <SAMPLE> at the specified rate(s).")
 parser.add_argument("-r", "--rates", type=str, metavar="<RATE1,RATE2,RATE3,...>", required=True, help="A comma separated list of contamination rates.")
-parser.add_argument("-n", "--nrReps", type=int, metavar="<nrReps>", required=False, default=5, help="An integer value specifying the number of replicate contaminated genotypes to be created per contamination rate [5].")
+parser.add_argument("-n", "--nrReps", type=int, metavar="<nrReps>", required=False, default=1, help="An integer value specifying the number of replicate contaminated genotypes to be created per contamination rate [1].")
 args = parser.parse_args()
 
 GenoFile = open(args.Input+".geno", "r")
@@ -58,7 +58,7 @@ OutIndFile = args.Output+".ind"
 SampleList=[x for x in args.Samples.split(',')]
 rates=[float(r) for r in args.rates.split(',')]
 
-#Check for errors in input files
+##Check for errors in input files
 ##Check geno and snp compatibility
 lineNo = ""
 for line in sh.grep(sh.wc("-l", args.Input+".geno", args.Input+".snp"), args.Input):
@@ -76,13 +76,20 @@ with open(args.Input+".geno", "r") as f:
             break
         else:
             raise IOError("Input .ind and .geno files do not match.")
+
+## Index Individual in database.
 (Index,Sex,Pop)=Indexing(SampleList, args.Contaminant)
+
+##Contaminate Genotypes
 for line in GenoFile:
     Genos=line.strip()
     print (Contaminate(Genos, SampleList, args.Contaminant, rates, args.nrReps, Index), file=OutGenoFile)
 
+##Copy original .snp and .ind files
 sh.cp(args.Input+".snp", OutSnpFile)
 sh.cp(args.Input+".ind", OutIndFile)
+
+##Append conaminated replicates of Samples at the end of the .ind file.
 with open(OutIndFile, "a") as f:
     for Sample in SampleList:
         for rate in rates:

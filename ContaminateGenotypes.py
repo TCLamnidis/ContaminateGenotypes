@@ -36,6 +36,26 @@ def Contaminate(Genos, SampleList, Contaminant, rates, nrReps, Index):
             Contaminated+="9"*nrReps*len(rates)
     return (Genos+Contaminated)
 
+def CheckInputFiles(Input):
+    ##Check geno and snp compatibility
+    lineNo = ""
+    for line in sh.grep(sh.wc("-l", Input+".geno", Input+".snp"), Input):
+        if lineNo=="":
+            lineNo=line.strip().split()[0]
+        elif lineNo==line.strip().split()[0]:
+            break
+        elif lineNo!=line.strip().split()[0]:
+            raise IOError("Input .snp and .geno files do not match.")
+
+    ##Check geno and ind compatibility
+    with open(Input+".geno", "r") as f:
+        for line in f:
+            if str(len(line.strip())) == sh.wc("-l", Input+".ind").strip().split()[0]:
+                break
+            else:
+                raise IOError("Input .ind and .geno files do not match.")
+
+
 ##MAIN##
 parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <OUTPUT FILE PREFIX>) (-s <SAMPLE>) (-c <CONTAMINANT>) (-r <RATE1,RATE2,RATE3,...>) (-n <nrReps>)" , description="A tool artificially contaminate the genotypes of multiple sample individuals with genotypes from a contaminant individual, at different rates of contamination.")
 parser._optionals.title = "Available options"
@@ -59,23 +79,7 @@ SampleList=[x for x in args.Samples.split(',')]
 rates=[float(r) for r in args.rates.split(',')]
 
 ##Check for errors in input files
-##Check geno and snp compatibility
-lineNo = ""
-for line in sh.grep(sh.wc("-l", args.Input+".geno", args.Input+".snp"), args.Input):
-    if lineNo=="":
-        lineNo=line.strip().split()[0]
-    elif lineNo==line.strip().split()[0]:
-        break
-    elif lineNo!=line.strip().split()[0]:
-        raise IOError("Input .snp and .geno files do not match.")
-
-##Check geno and ind compatibility
-with open(args.Input+".geno", "r") as f:
-    for line in f:
-        if str(len(line.strip())) == sh.wc("-l", args.Input+".ind").strip().split()[0]:
-            break
-        else:
-            raise IOError("Input .ind and .geno files do not match.")
+CheckInputFiles(args.Input)
 
 ## Index Individual in database.
 (Index,Sex,Pop)=Indexing(SampleList, args.Contaminant)

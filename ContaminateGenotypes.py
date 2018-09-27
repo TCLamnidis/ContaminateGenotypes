@@ -1,20 +1,7 @@
 #!/projects1/tools/anaconda3/4.0.0/bin/python3
 
 import sys, argparse, sh, random
-
-def Indexing (SampleList, Contaminant):
-    Index={}
-    Sex={}
-    Pop={}
-    Targets="{}\|"*(len(SampleList))
-    Targets+="{}"
-    for line in sh.grep(sh.cat("-n",args.Input+".ind"), Targets.format(*SampleList,Contaminant),_ok_code=[0,1]):
-        fields=line.strip().split()
-        if fields[1] in SampleList or fields[1] == Contaminant:
-            Index[fields[1]]=(int(fields[0]) -1)
-            Sex [fields[1]]=fields[2]
-            Pop [fields[1]]=fields[3]
-    return (Index, Sex, Pop)
+import Utils as util
 
 def Contaminate(Genos, SampleList, Contaminant, rates, nrReps, Index):
     Contaminated=""
@@ -35,26 +22,6 @@ def Contaminate(Genos, SampleList, Contaminant, rates, nrReps, Index):
         else:
             Contaminated+="9"*nrReps*len(rates)
     return (Genos+Contaminated)
-
-def CheckInputFiles(Input):
-    ##Check geno and snp compatibility
-    lineNo = ""
-    for line in sh.grep(sh.wc("-l", Input+".geno", Input+".snp"), Input):
-        if lineNo=="":
-            lineNo=line.strip().split()[0]
-        elif lineNo==line.strip().split()[0]:
-            break
-        elif lineNo!=line.strip().split()[0]:
-            raise IOError("Input .snp and .geno files do not match.")
-
-    ##Check geno and ind compatibility
-    with open(Input+".geno", "r") as f:
-        for line in f:
-            if str(len(line.strip())) == sh.wc("-l", Input+".ind").strip().split()[0]:
-                break
-            else:
-                raise IOError("Input .ind and .geno files do not match.")
-
 
 ##MAIN##
 parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <OUTPUT FILE PREFIX>) (-s <SAMPLE>) (-c <CONTAMINANT>) (-r <RATE1,RATE2,RATE3,...>) (-n <nrReps>)" , description="A tool artificially contaminate the genotypes of multiple sample individuals with genotypes from a contaminant individual, at different rates of contamination.")
@@ -79,10 +46,10 @@ SampleList=[x for x in args.Samples.split(',')]
 rates=[float(r) for r in args.rates.split(',')]
 
 ##Check for errors in input files
-CheckInputFiles(args.Input)
+util.CheckInputFiles(args.Input)
 
 ## Index Individual in database.
-(Index,Sex,Pop)=Indexing(SampleList, args.Contaminant)
+(Index,Sex,Pop)=util.Indexing(args.Input, SampleList, args.Contaminant)
 
 ##Contaminate Genotypes
 for line in GenoFile:

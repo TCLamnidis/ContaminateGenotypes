@@ -28,8 +28,8 @@ Available options:
                         An integer value specifying the number of replicate
                         contaminated genotypes to be created per contamination
                         rate [1].
-
 ```
+
 The provided script will contaminate the genotypes of a given sample individual 
 in an Eigenstrat dataset at a specified rate, to match the genotypes of a 
 specified contaminant individual. Missing data in the sample individual will be 
@@ -38,3 +38,38 @@ number of replicates can be specified for each contamination rate. Contaminated
 individuals will be saved as a separate individual within the resulting 
 Eigenstrat database, following the naming scheme ``Sample_ContaminationRate_ReplicateNumber``. 
 The population assigned to each replicate follows a similar naming scheme, but without a replicate number.
+
+# SprinkleMissing
+A simple python that sprinkles missing genotypes in Eigenstrat genotypes.
+
+A tool artificially sprinkle missing data in the genotypes of multiple sample
+individuals at different missingness rates.
+
+```
+Available options:
+  -h, --help            show this help message and exit
+  -i <INPUT FILES PREFIX>, --Input <INPUT FILES PREFIX>
+                        The desired input file prefix. Input files are assumed
+                        to be '<INPUT PREFIX>.geno', '<INPUT PREFIX>.snp' and
+                        '<INPUT PREFIX>.ind'.
+  -o <OUTPUT FILES PREFIX>, --Output <OUTPUT FILES PREFIX>
+                        The desired output file prefix. Three output files are
+                        created, '<OUTPUT FILES PREFIX>.geno', '<OUTPUT FILES
+                        PREFIX>.snp' and '<OUTPUT FILES PREFIX>.ind'.
+  -s <SAMPLE1,SAMPLE2,SAMPLE3,...>, --Samples <SAMPLE1,SAMPLE2,SAMPLE3,...>
+                        The sample individual(s), whose genotypes will go
+                        missing.
+  -r <RATE1,RATE2,RATE3,...>, --rates <RATE1,RATE2,RATE3,...>
+                        A comma separated list of missingness rates.
+  -n <nrReps>, --nrReps <nrReps>
+                        An integer value specifying the number of replicate
+                        individuals to be created per missingness rate [5].
+```
+
+The provided script will sprinkle missing genotypes to a given set of sample individuals 
+in an Eigenstrat dataset at a specified rate. Missing data in the sample individual will be 
+kept as missing. A number of replicates are created per missingness rate (defaults to 5). 
+Missingness is added to newly created dummy individuals within the resulting Eigenstrat 
+database. The naming scheme for these individuals is similar to that used in ``ContaminateGenotypes.py``, 
+except the letter ``m`` is added before the missingness rate, to identify the dataset as 
+having additional missingness and not contamination.

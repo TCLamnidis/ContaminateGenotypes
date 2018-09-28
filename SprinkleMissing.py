@@ -14,7 +14,7 @@ def SprinkleMissing(Genos, SampleList, rates, nrReps, Index):
                         Missing+=Genos[Index[Sample]]
         else:
             Missing+="9"*nrReps*len(rates)
-    return (Genos+Missing)
+    return (Genos+Missing);
 
 ## MAIN ##
 parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <OUTPUT FILE PREFIX>) (-s <SAMPLE>) (-r <RATE1,RATE2,RATE3,...>) (-n <nrReps>)" , description="A tool artificially sprinkle missing data in the genotypes of multiple sample individuals at different missingness rates.")

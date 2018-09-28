@@ -12,7 +12,7 @@ def Indexing (Input, SampleList, Contaminant):
             Index[fields[1]]=(int(fields[0]) -1)
             Sex [fields[1]]=fields[2]
             Pop [fields[1]]=fields[3]
-    return (Index, Sex, Pop)
+    return (Index, Sex, Pop);
 
 def CheckInputFiles(Input):
     ##Check geno and snp compatibility
@@ -31,4 +31,4 @@ def CheckInputFiles(Input):
             if str(len(line.strip())) == sh.wc("-l", Input+".ind").strip().split()[0]:
                 break
             else:
-                raise IOError("Input .ind and .geno files do not match.")
+                raise IOError("Input .ind and .geno files do not match.");

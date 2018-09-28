@@ -21,7 +21,7 @@ def Contaminate(Genos, SampleList, Contaminant, rates, nrReps, Index):
                         Contaminated+=Genos[Index[Sample]]
         else:
             Contaminated+="9"*nrReps*len(rates)
-    return (Genos+Contaminated)
+    return (Genos+Contaminated);
 
 ##MAIN##
 parser = argparse.ArgumentParser(usage="%(prog)s (-i <INPUT FILE PREFIX>) (-o <OUTPUT FILE PREFIX>) (-s <SAMPLE>) (-c <CONTAMINANT>) (-r <RATE1,RATE2,RATE3,...>) (-n <nrReps>)" , description="A tool artificially contaminate the genotypes of multiple sample individuals with genotypes from a contaminant individual, at different rates of contamination.")

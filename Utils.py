@@ -12,6 +12,10 @@ def Indexing (Input, SampleList, Contaminant):
             Index[fields[1]]=(int(fields[0]) -1)
             Sex [fields[1]]=fields[2]
             Pop [fields[1]]=fields[3]
+    for Ind in (SampleList + [Contaminant]):
+        if Ind not in Index:
+            if Ind != '':
+                raise ValueError("Individual '{}' could not be indexed. Execution halted.".format(Ind))
     return (Index, Sex, Pop);
 
 def CheckInputFiles(Input):

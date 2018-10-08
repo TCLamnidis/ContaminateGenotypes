@@ -38,6 +38,12 @@ OutIndFile = args.Output+".ind"
 SampleList=[x for x in args.Samples.split(',')]
 rates=[float(r) for r in args.rates.split(',')]
 
+## Check for errors in input files.
+util.CheckInputFiles(args.Input)
+
+## Index Individual in database.
+(Index,Sex,Pop)=util.Indexing(args.Input, SampleList, '')
+
 ## Print Logfile.
 with sys.stderr as o:
     print('#Input files:', args.Input+".geno", args.Input+".snp", args.Input+".ind", sep="\n\t", file=o)
@@ -47,12 +53,6 @@ with sys.stderr as o:
     print('#Missingness Rates:', end="\t", file=o)
     print(*rates, sep=",", file=o)
     print('#NrReps:',args.nrReps, sep="\t",file=o)
-
-## Check for errors in input files.
-util.CheckInputFiles(args.Input)
-
-## Index Individual in database.
-(Index,Sex,Pop)=util.Indexing(args.Input, SampleList, '')
 
 ## Sprinkle missing genotypes in data.
 for line in GenoFile:

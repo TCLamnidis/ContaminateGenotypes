@@ -28,7 +28,11 @@ Available options:
                         An integer value specifying the number of replicate
                         contaminated genotypes to be created per contamination
                         rate [1].
-
+  -v, --overlapOnly     When provided, only SNPs that are present in both
+                        Contaminant and Sample will be contaminated, while all
+                        other SNPs will be set to missing. This ensures
+                        conaminant genotypes will not be diluted due to lack
+                        of coverage overlap in the Sample and Contaminant.
 ```
 The provided script will contaminate the genotypes of a given sample individual 
 in an Eigenstrat dataset at a specified rate, to match the genotypes of a 
@@ -38,3 +42,5 @@ number of replicates can be specified for each contamination rate. Contaminated
 individuals will be saved as a separate individual within the resulting 
 Eigenstrat database, following the naming scheme ``Sample_ContaminationRate_ReplicateNumber``. 
 The population assigned to each replicate follows a similar naming scheme, but without a replicate number.
+
+In cases where the contaminant individual has a missing genotype, the default behaviour is to add missing genotypes at the specified contamination rate. The ``-v/--overlapOnly`` option can be provided to override this default and set all genotypes that are missing in **either the sample or contaminant** to missing. In cases where both the sample and contaminant have incomplete coverage (as is often the case with ancient individuals), this will lower overall coverage, but keep result contamination rates consistent.

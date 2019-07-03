@@ -35,7 +35,7 @@ parser.add_argument("-s", "--Samples", type=str, metavar="<SAMPLE1,SAMPLE2,SAMPL
 parser.add_argument("-c", "--Contaminant", type=str, metavar="<CONTAMINANT>", required=True, help="The contaminant individual, which will be used to contaminate the genotypes of each <SAMPLE> at the specified rate(s).")
 parser.add_argument("-r", "--rates", type=str, metavar="<RATE1,RATE2,RATE3,...>", required=True, help="A comma separated list of contamination rates.")
 parser.add_argument("-n", "--nrReps", type=int, metavar="<nrReps>", required=False, default=1, help="An integer value specifying the number of replicate contaminated genotypes to be created per contamination rate [1].")
-parser.add_argument("-v", "--overlapOnly", action="store_true", required=False, help="When provided, only SNPs that are present in both Contaminant and Source will be contaminated, while all other SNPs will be set to missing. This ensures conaminant genotypes will not be diluted due to lack of coverage overlap in the Source and Contaminant.")
+parser.add_argument("-v", "--overlapOnly", action="store_true", required=False, help="When provided, only SNPs that are present in both Contaminant and Sample will be contaminated, while all other SNPs will be set to missing. This ensures conaminant genotypes will not be diluted due to lack of coverage overlap in the Sample and Contaminant.")
 args = parser.parse_args()
 
 GenoFile = open(args.Input+".geno", "r")
